@@ -5,7 +5,7 @@ import {
   Menu, X, ArrowRight, ArrowUpRight, ChevronRight,
   Code2, Smartphone, Cloud, Palette, Layers, Lightbulb,
   Github, Twitter, Linkedin, Instagram,
-  Star, Check, LogOut, ExternalLink, Mail, MapPin, Phone,
+  Star, Check, ExternalLink, Mail, MapPin, Phone,
 } from "lucide-react";
 
 const ACCENT = "#FF4500";
@@ -104,7 +104,7 @@ export function useBreakpoint() {
 // ─────────────────────────────────────────────────────────────────────────────
 const NAV_LINKS = ["Services", "Work", "Process", "About", "Contact"];
 
-function Header({ onLogout }: { onLogout: () => void }) {
+function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { isMobile, isTablet } = useBreakpoint();
@@ -238,34 +238,6 @@ function Header({ onLogout }: { onLogout: () => void }) {
                 <ArrowRight size={11} />
               </motion.button>
             )}
-            <button
-              onClick={onLogout}
-              title="Log out"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 7,
-                background: T.surface,
-                border: `1px solid ${T.border}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                color: T.textSubtle,
-                transition: "color 0.2s, background 0.2s",
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = "#FF6B3A";
-                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,69,0,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = T.textSubtle;
-                (e.currentTarget as HTMLButtonElement).style.background = T.surface;
-              }}
-            >
-              <LogOut size={13} />
-            </button>
             {compact && (
               <button
                 onClick={() => setMenuOpen((v) => !v)}
@@ -2200,7 +2172,7 @@ const FOOTER_LINKS = {
 
 type Page = "home" | "privacy" | "terms" | "nda" | "cookies";
 
-function Footer({ onLogout, onNavigate }: { onLogout: () => void; onNavigate?: (page: Page) => void }) {
+function Footer({ onNavigate }: { onNavigate?: (page: Page) => void }) {
   const { isMobile, isTablet } = useBreakpoint();
 
   return (
@@ -2348,28 +2320,6 @@ function Footer({ onLogout, onNavigate }: { onLogout: () => void; onNavigate?: (
             <span style={{ fontFamily: T.mono, fontSize: 8, letterSpacing: "0.14em", color: T.textSubtle, textTransform: "uppercase" }}>
               SOC 2 Compliant · SSL Secured
             </span>
-            <button
-              onClick={onLogout}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: T.mono,
-                fontSize: 8,
-                letterSpacing: "0.14em",
-                color: T.textSubtle,
-                textTransform: "uppercase",
-                padding: 0,
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6B3A")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = T.textSubtle)}
-            >
-              <LogOut size={10} /> Sign Out
-            </button>
           </div>
         </div>
       </div>
@@ -2381,11 +2331,10 @@ function Footer({ onLogout, onNavigate }: { onLogout: () => void; onNavigate?: (
 // MAIN WEBSITE ASSEMBLY
 // ─────────────────────────────────────────────────────────────────────────────
 type CubixByteWebsiteProps = {
-  onLogout: () => void;
   onNavigate?: (page: Page) => void;
 };
 
-export function CubixByteWebsite({ onLogout, onNavigate }: CubixByteWebsiteProps) {
+export function CubixByteWebsite({ onNavigate }: CubixByteWebsiteProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -2393,7 +2342,7 @@ export function CubixByteWebsite({ onLogout, onNavigate }: CubixByteWebsiteProps
       transition={{ duration: 0.5 }}
       style={{ background: T.bg, minHeight: "100vh", color: T.textPrimary }}
     >
-      <Header onLogout={onLogout} />
+      <Header />
       <main>
         <Hero />
         <Services />
@@ -2403,7 +2352,7 @@ export function CubixByteWebsite({ onLogout, onNavigate }: CubixByteWebsiteProps
         <Testimonials />
         <Contact />
       </main>
-      <Footer onLogout={onLogout} onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} />
     </motion.div>
   );
 }

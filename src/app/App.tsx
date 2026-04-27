@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { LimitedDropAuth } from "./components/LimitedDropAuth";
 import { CubixByteWebsite } from "./components/CubixByteWebsite";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
@@ -9,7 +8,6 @@ import { CookiePolicy } from "./pages/CookiePolicy";
 type Page = "home" | "privacy" | "terms" | "nda" | "cookies";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>("home");
 
   // Handle navigation to legal pages
@@ -17,11 +15,6 @@ export default function App() {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
-
-  // Show auth screen if not logged in
-  if (!isLoggedIn) {
-    return <LimitedDropAuth onLogin={() => setIsLoggedIn(true)} />;
-  }
 
   // Show legal pages
   switch (currentPage) {
@@ -36,7 +29,6 @@ export default function App() {
     default:
       return (
         <CubixByteWebsite
-          onLogout={() => setIsLoggedIn(false)}
           onNavigate={navigateTo}
         />
       );
