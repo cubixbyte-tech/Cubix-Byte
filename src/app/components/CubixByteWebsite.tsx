@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { RubiksCube3D } from "./RubiksCube3D";
+import { Magnet } from "./Magnet";
+import { ScrollVelocity } from "./ScrollVelocity";
 import {
   Menu, X, ArrowRight, ArrowUpRight, ChevronRight,
   Code2, Smartphone, Cloud, Palette, Layers, Lightbulb,
@@ -183,28 +185,29 @@ function Header() {
 
           {/* Desktop Nav */}
           {!compact && (
-            <nav style={{ display: "flex", alignItems: "center", gap: 36 }}>
+            <nav style={{ display: "flex", alignItems: "center", gap: 24 }}>
               {NAV_LINKS.map((link) => (
-                <button
-                  key={link}
-                  onClick={() => scrollTo(link)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: T.mono,
-                    fontSize: 9,
-                    letterSpacing: "0.18em",
-                    color: T.textMuted,
-                    textTransform: "uppercase",
-                    transition: "color 0.2s",
-                    padding: 0,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = T.textPrimary)}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = T.textMuted)}
-                >
-                  {link}
-                </button>
+                <Magnet key={link} padding={60} magnetStrength={3}>
+                  <button
+                    onClick={() => scrollTo(link)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      fontFamily: T.mono,
+                      fontSize: 9,
+                      letterSpacing: "0.18em",
+                      color: T.textMuted,
+                      textTransform: "uppercase",
+                      transition: "color 0.2s",
+                      padding: "8px 12px",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = T.textPrimary)}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = T.textMuted)}
+                  >
+                    {link}
+                  </button>
+                </Magnet>
               ))}
             </nav>
           )}
@@ -212,31 +215,33 @@ function Header() {
           {/* Right actions */}
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {!compact && (
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => scrollTo("Contact")}
-                style={{
-                  height: 38,
-                  padding: "0 20px",
-                  background: ACCENT,
-                  border: "none",
-                  borderRadius: 7,
-                  fontFamily: T.mono,
-                  fontSize: 9,
-                  letterSpacing: "0.2em",
-                  color: "#fff",
-                  cursor: "pointer",
-                  textTransform: "uppercase",
-                  boxShadow: "0 2px 16px rgba(255,69,0,0.35)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                Start a Project
-                <ArrowRight size={11} />
-              </motion.button>
+              <Magnet padding={80} magnetStrength={2.5}>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => scrollTo("Contact")}
+                  style={{
+                    height: 38,
+                    padding: "0 20px",
+                    background: ACCENT,
+                    border: "none",
+                    borderRadius: 7,
+                    fontFamily: T.mono,
+                    fontSize: 9,
+                    letterSpacing: "0.2em",
+                    color: "#fff",
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                    boxShadow: "0 2px 16px rgba(255,69,0,0.35)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  Start a Project
+                  <ArrowRight size={11} />
+                </motion.button>
+              </Magnet>
             )}
             {compact && (
               <button
@@ -387,10 +392,10 @@ function Hero() {
             transform: "translateY(-50%)",
           }}
         >
-          {/* 3D Rubik's Cube — canvas-rendered, GPU-friendly */}
+          {/* 3D Rubik's Cube  canvas-rendered, GPU-friendly */}
           <RubiksCube3D />
 
-          {/* Secondary offset orb — drifts */}
+          {/* Secondary offset orb  drifts */}
           <motion.div
             animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.1, 0.95, 1] }}
             transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
@@ -564,7 +569,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{ marginBottom: 32 }}
         >
-          <Label>Available for new projects — Q3 2025</Label>
+          <Label>Available for new projects  Q3 2025</Label>
         </motion.div>
 
         {/* Main headline */}
@@ -627,7 +632,7 @@ function Hero() {
         >
           CubixByte is a full-stack software agency. We partner with startups
           and enterprises to design, build, and launch exceptional digital
-          experiences — from MVP to production at scale.
+          experiences  from MVP to production at scale.
         </motion.p>
 
         {/* CTAs */}
@@ -637,66 +642,67 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.48 }}
           style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}
         >
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
-            style={{
-              height: 50,
-              padding: "0 28px",
-              background: ACCENT,
-              border: "none",
-              borderRadius: 9,
-              fontFamily: T.mono,
-              fontSize: 9.5,
-              letterSpacing: "0.2em",
-              color: "#fff",
-              cursor: "pointer",
-              textTransform: "uppercase",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              boxShadow: "0 4px 24px rgba(255,69,0,0.4)",
-            }}
-          >
-            View Our Work <ArrowRight size={13} />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            style={{
-              height: 50,
-              padding: "0 28px",
-              background: "rgba(255,255,255,0.04)",
-              border: `1px solid ${T.border}`,
-              borderRadius: 9,
-              fontFamily: T.mono,
-              fontSize: 9.5,
-              letterSpacing: "0.2em",
-              color: T.textSecondary,
-              cursor: "pointer",
-              textTransform: "uppercase",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            Start a Project
-          </motion.button>
+          <Magnet padding={100} magnetStrength={2}>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                height: 50,
+                padding: "0 28px",
+                background: ACCENT,
+                border: "none",
+                borderRadius: 9,
+                fontFamily: T.mono,
+                fontSize: 9.5,
+                letterSpacing: "0.2em",
+                color: "#fff",
+                cursor: "pointer",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                boxShadow: "0 4px 24px rgba(255,69,0,0.4)",
+              }}
+            >
+              View Our Work <ArrowRight size={13} />
+            </motion.button>
+          </Magnet>
+          <Magnet padding={100} magnetStrength={2}>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                height: 50,
+                padding: "0 28px",
+                background: "rgba(255,255,255,0.04)",
+                border: `1px solid ${T.border}`,
+                borderRadius: 9,
+                fontFamily: T.mono,
+                fontSize: 9.5,
+                letterSpacing: "0.2em",
+                color: T.textSecondary,
+                cursor: "pointer",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
+              Start a Project
+            </motion.button>
+          </Magnet>
         </motion.div>
 
-        {/* Tech pills */}
+        {/* Tech Stack ScrollVelocity */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.65 }}
           style={{
             marginTop: 64,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 8,
-            alignItems: "center",
+            position: "relative",
           }}
         >
           <span
@@ -706,31 +712,41 @@ function Hero() {
               letterSpacing: "0.18em",
               color: T.textSubtle,
               textTransform: "uppercase",
-              marginRight: 8,
+              display: "block",
+              marginBottom: 16,
             }}
           >
-            Tech Stack ·
+            Tech Stack
           </span>
-          {TECH_PILLS.map((pill, i) => (
-            <motion.span
-              key={pill}
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7 + i * 0.05 }}
-              style={{
-                padding: "4px 12px",
-                borderRadius: 100,
-                background: T.surface,
-                border: `1px solid ${T.border}`,
-                fontFamily: T.mono,
-                fontSize: 8,
-                letterSpacing: "0.12em",
-                color: T.textMuted,
-              }}
-            >
-              {pill}
-            </motion.span>
-          ))}
+          <ScrollVelocity
+            texts={[
+              <span style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                {TECH_PILLS.map((pill) => (
+                  <span
+                    key={pill}
+                    style={{
+                      padding: "6px 16px",
+                      borderRadius: 100,
+                      background: T.surface,
+                      border: `1px solid ${T.border}`,
+                      fontFamily: T.mono,
+                      fontSize: 10,
+                      letterSpacing: "0.12em",
+                      color: T.textMuted,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {pill}
+                  </span>
+                ))}
+              </span>,
+            ]}
+            velocity={80}
+            numCopies={4}
+            scrollerStyle={{
+              gap: 24,
+            }}
+          />
         </motion.div>
       </div>
 
@@ -767,7 +783,7 @@ const SERVICES = [
     num: "01",
     title: "Web Development",
     desc: "Scalable, performant web applications built with React, Next.js, and Node.js. From SaaS dashboards to consumer apps.",
-    detail: "We build for the long term — clean architecture, comprehensive testing, and documentation your team will actually use.",
+    detail: "We build for the long term  clean architecture, comprehensive testing, and documentation your team will actually use.",
     tags: ["React", "Next.js", "Node.js", "TypeScript"],
   },
   {
@@ -791,7 +807,7 @@ const SERVICES = [
     num: "04",
     title: "UI/UX Design",
     desc: "Design systems and interfaces that feel inevitable. Figma prototypes, design tokens, and pixel-perfect implementation.",
-    detail: "We ship design and code together — no handoff friction, no lost fidelity.",
+    detail: "We ship design and code together  no handoff friction, no lost fidelity.",
     tags: ["Figma", "Design Systems", "Prototyping"],
   },
   {
@@ -806,7 +822,7 @@ const SERVICES = [
     icon: Lightbulb,
     num: "06",
     title: "Product Strategy",
-    desc: "From idea to roadmap. We help you define what to build, for whom, and in what order — before writing a single line of code.",
+    desc: "From idea to roadmap. We help you define what to build, for whom, and in what order  before writing a single line of code.",
     detail: "Our discovery sprints have saved clients an average of 3 months of wasted development time.",
     tags: ["Discovery", "Roadmapping", "OKRs", "Research"],
   },
@@ -861,7 +877,7 @@ function Services() {
                 flexShrink: 0,
               }}
             >
-              Strategy, design, development, and deployment — end to end, under one roof. We stay until it ships.
+              Strategy, design, development, and deployment  end to end, under one roof. We stay until it ships.
             </p>
           </div>
         </Reveal>
@@ -1463,7 +1479,7 @@ function ProjectCard({
           </span>
         </div>
 
-        {/* Metric badge — bottom-left of image */}
+        {/* Metric badge  bottom-left of image */}
         {!isWide && (
           <div
             style={{
@@ -1501,7 +1517,7 @@ function ProjectCard({
           </div>
         )}
 
-        {/* Hover arrow — top right */}
+        {/* Hover arrow  top right */}
         <motion.div
           animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : 6, y: hovered ? 0 : -6 }}
           transition={{ duration: 0.22 }}
@@ -1564,7 +1580,7 @@ function ProjectCard({
           {project.desc}
         </p>
 
-        {/* Metric — wide variant shows it here */}
+        {/* Metric  wide variant shows it here */}
         {isWide && (
           <div style={{ marginBottom: 20, display: "flex", alignItems: "baseline", gap: 8 }}>
             <span style={{ fontFamily: T.serif, fontSize: 36, fontWeight: 300, color: T.textPrimary, lineHeight: 1 }}>
@@ -1953,7 +1969,7 @@ function Contact() {
                 <em style={{ fontStyle: "italic", color: T.textSecondary }}>build together?</em>
               </h2>
               <p style={{ fontFamily: T.sans, fontSize: 15, color: T.textMuted, lineHeight: 1.7, margin: "0 0 40px", fontWeight: 300, maxWidth: 400 }}>
-                We take on a limited number of projects each quarter. Tell us about what you're building — we'll get back within 24 hours.
+                We take on a limited number of projects each quarter. Tell us about what you're building  we'll get back within 24 hours.
               </p>
 
               {/* Contact details */}
@@ -1961,7 +1977,7 @@ function Contact() {
                 {[
                   { icon: Mail, label: "hello@cubixbyte.io" },
                   { icon: Phone, label: "+1 (415) 000-0000" },
-                  { icon: MapPin, label: "San Francisco, CA — Remote Globally" },
+                  { icon: MapPin, label: "San Francisco, CA  Remote Globally" },
                 ].map(({ icon: Icon, label }) => (
                   <div key={label} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <div
@@ -2011,7 +2027,7 @@ function Contact() {
             </div>
           </Reveal>
 
-          {/* Right — form */}
+          {/* Right  form */}
           <Reveal delay={0.15}>
             <AnimatePresence mode="wait">
               {sent ? (
